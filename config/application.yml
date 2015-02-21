@@ -1,0 +1,22 @@
+production:
+  delivery_method: smtp
+
+development:
+  delivery_method: smtp
+
+test:
+  delivery_method: test
+
+delivery:
+  default_sender_name: Brett Cassette - Snack Pack
+  default_sender_address: brett@snackpack.delivery
+  default_sender_reply_to: no-reply@snackpack.delivery
+  default_locale: 'en-US'
+  store_period_in_months: 2
+  s3_bucket: 'snackpack'
+
+sendgrid_smtp_settings:
+  address: smtp.sendgrid.net
+  domain: snackpack.delivery
+  authentication: plain
+  port: 587
