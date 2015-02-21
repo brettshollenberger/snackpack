@@ -12,7 +12,7 @@ RSpec.describe User do
   end
 
   it "has an email" do
-    expect(user.email).to eq "drake@drizzy.net"
+    expect(user.email).to_not be_empty
   end
 
   it "has a role" do
@@ -48,6 +48,12 @@ RSpec.describe User do
       user.email = "not_an_email"
 
       expect(user).to_not be_valid
+    end
+
+    it "is not valid with a non-unique email" do
+      user_with_dup_email = FactoryGirl.build(:user, :email => user.email)
+
+      expect(user_with_dup_email).to_not be_valid
     end
   end
 end
