@@ -16,6 +16,7 @@ gem 'exception_notification'
 gem 'hashie'
 gem 'bugsnag'
 gem 'foreigner'
+gem 'valid_email'
 
 # Email providers
 gem 'send_with_us'
@@ -51,6 +52,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
+  gem 'terminal-notifier'
   gem 'webmock'
   gem 'test_after_commit'
   gem 'factory_girl_rails'
