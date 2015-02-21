@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150221225122) do
+ActiveRecord::Schema.define(version: 20150221231026) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20150221225122) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "templates", force: :cascade do |t|
+    t.string   "name",       limit: 255,   null: false
+    t.string   "slug",       limit: 255,   null: false
+    t.string   "subject",    limit: 255
+    t.text     "html",       limit: 65535
+    t.text     "text",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "templates", ["slug"], name: "index_templates_on_slug", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name", limit: 255,             null: false
