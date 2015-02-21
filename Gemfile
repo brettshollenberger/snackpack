@@ -54,4 +54,5 @@ group :development, :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'factory_girl_rails'
+  gem "database_cleaner"
 end
