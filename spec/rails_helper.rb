@@ -16,4 +16,12 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
+
+  config.before(:each, :logsql) do
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
+  end
+
+  config.after(:each, :logsql) do
+    ActiveRecord::Base.logger = nil
+  end
 end
