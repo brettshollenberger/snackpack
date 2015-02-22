@@ -27,7 +27,7 @@ class Delivery
           body renderer.html_body
         end
 
-        delivery_method renderer.delivery_method, renderer.smtp_options.symbolize_keys
+        delivery_method renderer.delivery_method, HashWithIndifferentAccess.new(renderer.smtp_options).symbolize_keys
       end
     end
 
