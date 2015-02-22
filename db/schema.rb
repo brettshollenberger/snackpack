@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222014129) do
+ActiveRecord::Schema.define(version: 20150222020309) do
 
   create_table "deliveries", force: :cascade do |t|
     t.integer  "template_id",  limit: 4,                 null: false
@@ -28,12 +28,6 @@ ActiveRecord::Schema.define(version: 20150222014129) do
   add_index "deliveries", ["recipient_id"], name: "fk_recipient_id", using: :btree
   add_index "deliveries", ["sender_id"], name: "fk_sender_id", using: :btree
   add_index "deliveries", ["template_id"], name: "fk_template_id", using: :btree
-
-  create_table "email_providers", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
