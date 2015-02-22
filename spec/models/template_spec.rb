@@ -27,6 +27,10 @@ describe Template do
     expect(template.text).to eq "Email. Hi"
   end
 
+  it "has a provider" do
+    expect(template.provider).to eq "sendgrid"
+  end
+
   describe "validations" do
     it "is valid" do
       expect(template).to be_valid

@@ -4,5 +4,6 @@ FactoryGirl.define do
     subject "An Email For You!"
     html "<h1>Email</h1><p>Hi</p>"
     text "Email. Hi"
+    provider "sendgrid"
   end
 end

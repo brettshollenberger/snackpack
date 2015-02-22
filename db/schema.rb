@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222020309) do
+ActiveRecord::Schema.define(version: 20150222020400) do
 
   create_table "deliveries", force: :cascade do |t|
     t.integer  "template_id",  limit: 4,                 null: false
@@ -43,13 +43,14 @@ ActiveRecord::Schema.define(version: 20150222020309) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "templates", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
-    t.string   "slug",       limit: 255,   null: false
+    t.string   "name",       limit: 255,               null: false
+    t.string   "slug",       limit: 255,               null: false
     t.string   "subject",    limit: 255
     t.text     "html",       limit: 65535
     t.text     "text",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "provider",   limit: 4,     default: 0
   end
 
   add_index "templates", ["slug"], name: "index_templates_on_slug", unique: true, using: :btree
