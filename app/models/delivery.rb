@@ -1,4 +1,8 @@
+require 'email_address_formatter'
+
 class Delivery < ActiveRecord::Base
+  class MissingDeliveryAdapter < StandardError; end
+
   belongs_to :template
   belongs_to :recipient, :class_name => "User", :autosave => true
   belongs_to :sender, :class_name => "User", :autosave => true
@@ -9,6 +13,22 @@ class Delivery < ActiveRecord::Base
   auto_strip_attributes :data
 
   validates_presence_of :template, :recipient, :sender
+
+  def deliver
+    delivery_adapter.deliver(message)
+    update(status: 'sent', sent_at: Time.zone.now)
+  end
+
+  def message
+    if valid? and self.template.renderable?
+      @message ||= MessageRenderer.new(
+        data: data_hash, 
+        template: template, 
+        recipient: recipient, 
+        sender: sender
+      ).render
+    end
+  end
 
   # Public: Return sanitized data + default values in Hashie::Mash
   #
@@ -41,5 +61,15 @@ private
         }
       }
     }
+  end
+
+  def delivery_adapter
+    adapter_name = "Delivery::Deliverers::#{template.provider.classify}Deliverer"
+
+    begin
+      adapter_name.constantize
+    rescue LoadError
+      raise MissingDeliveryAdapter, "#{adapter_name} not defined"
+    end
   end
 end

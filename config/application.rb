@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+CONFIG = Hashie::Mash.new(YAML.load(ERB.new(File.read(File.expand_path('../application.yml', __FILE__))).result(binding)))
+
 module Snackpack
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

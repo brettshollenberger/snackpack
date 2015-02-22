@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   validates :email, :email => true, :uniqueness => true
 
   auto_strip_attributes :email
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

@@ -66,4 +66,70 @@ describe Delivery do
       expect(delivery.data_hash.snackpack.sender.email).to    eq(delivery.sender.email)
     end
   end
+
+  describe "#message" do
+    it "renders the message using the template and data" do
+      html = <<-EOF
+        <html>
+          <body><p>
+            Hello <%= name %>, welcome to our email campaign.
+          </p></body>
+        </html>
+      EOF
+
+      delivery.template.html = html
+      delivery.data = {:name => "Aubrey Graham"}
+
+      html_part = delivery.message.html_part.decoded
+
+      expect(delivery.message.subject).to eq delivery.template.subject
+      expect(delivery.message.to).to      include delivery.recipient.email
+      expect(delivery.message.from).to    include delivery.sender.email
+      expect(html_part).to                match "Hello Aubrey Graham"
+    end
+
+    it "renders text templates" do
+      text = <<-EOF
+        Hello <%= name %>, welcome to our email campaign.
+      EOF
+
+      delivery.template.text = text
+      delivery.data = {:name => "Aubrey Graham"}
+
+      expect(delivery.message.text_part.decoded).to match "Hello Aubrey Graham, welcome to our email campaign."
+    end
+
+    it "injects inline CSS to html body" do
+      html = <<-EOF
+        <html>
+          <head><style>p {color: red;}</style></head>
+          <body><p>Hello <%= name %></p></body>
+        </html>
+      EOF
+
+      delivery.data = {:name => "Aubrey Graham"}
+      delivery.template.html = html
+      expect(delivery.message.html_part.decoded).to match '<p style="color:red">Hello Aubrey Graham</p>'
+    end
+  end
+  
+  describe "#deliver" do
+    it "delivers with SMTP for sendgrid provider" do
+      delivery.template = create(:sendgrid_template)
+
+      expect { delivery.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
+      expect(delivery.status).to eq 'sent'
+      expect(delivery.sent_at).to be_present
+    end
+
+    it "acquires an alternative deliverer if a timeout occurs on the preferred deliverer" do
+      delivery.template = create(:sendgrid_template)
+
+      allow(Delivery::Deliverers::SendgridDeliverer.circuit_breaker).to receive(:do_call).and_raise(Timeout::Error)
+
+      allow(Delivery::Deliverers::Deliverer).to receive(:acquire_alternative_deliverer).and_return(Delivery::Deliverers::SmtpDeliverer)
+
+      expect { delivery.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
+    end
+  end
 end

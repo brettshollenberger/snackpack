@@ -20,3 +20,7 @@ sendgrid_smtp_settings:
   domain: snackpack.delivery
   authentication: plain
   port: 587
+
+template:
+  renderable_providers:
+    - sendgrid
