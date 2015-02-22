@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150221231026) do
+ActiveRecord::Schema.define(version: 20150221235735) do
+
+  create_table "deliveries", force: :cascade do |t|
+    t.integer  "template_id",  limit: 4,                 null: false
+    t.integer  "recipient_id", limit: 4,                 null: false
+    t.integer  "sender_id",    limit: 4,                 null: false
+    t.datetime "send_at"
+    t.datetime "sent_at"
+    t.text     "data",         limit: 65535
+    t.integer  "status",       limit: 4,     default: 0
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "deliveries", ["recipient_id"], name: "fk_recipient_id", using: :btree
+  add_index "deliveries", ["sender_id"], name: "fk_sender_id", using: :btree
+  add_index "deliveries", ["template_id"], name: "fk_template_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
@@ -49,4 +65,7 @@ ActiveRecord::Schema.define(version: 20150221231026) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "deliveries", "templates", name: "fk_template_id"
+  add_foreign_key "deliveries", "users", column: "recipient_id", name: "fk_recipient_id"
+  add_foreign_key "deliveries", "users", column: "sender_id", name: "fk_sender_id"
 end

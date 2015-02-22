@@ -15,7 +15,6 @@ gem 'auto_strip_attributes'
 gem 'exception_notification'
 gem 'hashie'
 gem 'bugsnag'
-gem 'foreigner'
 gem 'valid_email'
 
 # Email providers
