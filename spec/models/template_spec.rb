@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Template, type: :model do
+describe Template do
   let(:template) { FactoryGirl.create(:template) }
 
   def char(n)

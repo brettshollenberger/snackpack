@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User do
+describe User do
   let(:user) { FactoryGirl.create(:user) }
 
   it "has a first name" do
