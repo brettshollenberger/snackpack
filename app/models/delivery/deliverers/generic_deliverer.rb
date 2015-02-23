@@ -28,13 +28,13 @@ class Delivery
         # Public: Select an alternative deliverer that is not failing
         def acquire_alternative_deliverer
           deliverers.select do |deliverer|
-            deliverer.circuit_breaker.state == :closed
+            deliverer.circuit_breaker.status != :open
           end.sample
         end
 
         def deliverers
           @deliverers ||= Rake::FileList.new(Dir[File.expand_path(File.join(__FILE__, "../**/*.rb"))].reject do |d|
-            d.match(/generic_deliverer/)
+            d.match(/generic_deliverer/) || d.match(/smtp_deliverer/)
           end).pathmap("%n").map(&:classify).map do |d|
             "Delivery::Deliverers::#{d}".constantize
           end

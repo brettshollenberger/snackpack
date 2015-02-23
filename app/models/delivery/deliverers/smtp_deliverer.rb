@@ -2,7 +2,7 @@ class Delivery
   module Deliverers
     class SmtpDeliverer < GenericDeliverer
       def self.circuit_breaker
-        @circuit_breaker ||= CircuitBreaker.new do |message|
+        @circuit_breaker ||= CircuitBreaker.new(timeout: 1, recent_count: 50, recent_minimum: 5) do |message|
           delivery_adapter(message)
         end
       end

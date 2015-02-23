@@ -1,4 +1,4 @@
-class CircuitBreaker2
+class CircuitBreaker
   class CallStatus
     attr_accessor :status
 

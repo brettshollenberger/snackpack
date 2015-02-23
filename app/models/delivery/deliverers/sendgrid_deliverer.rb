@@ -4,7 +4,7 @@ class Delivery
   module Deliverers
     class SendgridDeliverer < SmtpDeliverer
       def self.circuit_breaker
-        @circuit_breaker ||= CircuitBreaker.new do |message|
+        @circuit_breaker ||= CircuitBreaker.new(timeout: 2, recent_count: 50, recent_minimum: 5) do |message|
           delivery_adapter(message)
         end
       end

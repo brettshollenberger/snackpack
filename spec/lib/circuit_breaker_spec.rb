@@ -1,12 +1,12 @@
 require "rails_helper"
-require "circuit_breaker2"
+require "circuit_breaker"
 
-describe CircuitBreaker2 do
+describe CircuitBreaker do
   class LongRemoteCaller
     attr_accessor :circuit_breaker
 
     def initialize
-      @circuit_breaker ||= CircuitBreaker2.new(recent_count: 5, recent_minimum: 3) do |message|
+      @circuit_breaker ||= CircuitBreaker.new(recent_count: 5, recent_minimum: 3) do |message|
         __call__(message)
       end
     end
@@ -82,14 +82,14 @@ describe CircuitBreaker2 do
     expect(@remote_caller.circuit_breaker.status).to eq :open
   end
 
-  it "raises CircuitBreaker2::Open if the breaker is open, rather than making the call" do
+  it "raises CircuitBreaker::Open if the breaker is open, rather than making the call" do
     allow(@remote_caller.circuit_breaker).to receive(:do_call).and_raise(Timeout::Error)
 
     3.times do
       @remote_caller.call("Work")
     end
 
-    expect { @remote_caller.call("Work") }.to raise_error CircuitBreaker2::Open
+    expect { @remote_caller.call("Work") }.to raise_error CircuitBreaker::Open
   end
 
   it "becomes :half_open after becoming :open && passing the reset timeout" do

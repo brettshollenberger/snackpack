@@ -127,7 +127,7 @@ describe Delivery do
 
       allow(Delivery::Deliverers::SendgridDeliverer.circuit_breaker).to receive(:do_call).and_raise(Timeout::Error)
 
-      allow(Delivery::Deliverers::Deliverer).to receive(:acquire_alternative_deliverer).and_return(Delivery::Deliverers::SmtpDeliverer)
+      allow(Delivery::Deliverers::GenericDeliverer).to receive(:acquire_alternative_deliverer).and_return(Delivery::Deliverers::MailgunDeliverer)
 
       expect { delivery.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
     end
