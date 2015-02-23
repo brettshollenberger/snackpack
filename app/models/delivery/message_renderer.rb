@@ -26,13 +26,7 @@ class Delivery
         html_part do
           body renderer.html_body
         end
-
-        delivery_method renderer.delivery_method, HashWithIndifferentAccess.new(renderer.smtp_options).symbolize_keys
       end
-    end
-
-    def delivery_method
-      CONFIG[Rails.env.to_sym].delivery_method
     end
 
     def data_binding
@@ -63,18 +57,6 @@ class Delivery
 
     def from
       EmailAddressFormatter.new.format_address(sender.full_name, sender.email)
-    end
-
-    def smtp_options
-      send("#{template.provider}_smtp_options")
-    end
-
-    def sendgrid_smtp_options
-      CONFIG.sendgrid_smtp_settings.merge(
-        user_name: Rails.application.secrets.sendgrid_user_name,
-        password: Rails.application.secrets.sendgrid_password,
-        enable_starttls_auto: true
-      )
     end
   end
 end

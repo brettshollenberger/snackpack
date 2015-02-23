@@ -31,6 +31,13 @@ describe Template do
     expect(template.provider).to eq "sendgrid"
   end
 
+  it "allows sendgrid & mailgun providers" do
+    %w(sendgrid mailgun).each do |provider|
+      template.provider = provider
+      expect(template).to be_valid
+    end
+  end
+
   describe "validations" do
     it "is valid" do
       expect(template).to be_valid

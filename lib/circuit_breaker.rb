@@ -9,7 +9,7 @@ class CircuitBreaker
 
   def initialize(options={}, &block)
     @circuit            = block
-    @invocation_timeout = options.fetch(:timeout, 1)
+    @invocation_timeout = options.fetch(:timeout, 5)
     @failure_threshold  = options.fetch(:failure_threshold, 5)
     # @monitor          = acquire_monitor
     reset

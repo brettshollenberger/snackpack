@@ -7,10 +7,22 @@ class Delivery
         # Public: Deliver mail. If mail API is down, select another to deliver through.
         def deliver(message)
           begin
+            change_delivery_method(message, provider_name)
             circuit_breaker.call(message)
           rescue Timeout::Error
+            puts "Timed out. Acquiring alternative deliverer"
             acquire_alternative_deliverer.deliver(message)
           end
+        end
+
+        def change_delivery_method(message, provider)
+          message.delivery_method delivery_method, HashWithIndifferentAccess.new(
+            send("#{provider}_smtp_options")
+          ).symbolize_keys
+        end
+
+        def delivery_method
+          CONFIG[Rails.env.to_sym].delivery_method
         end
 
         # Public: Select an alternative deliverer that is not failing

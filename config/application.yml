@@ -21,6 +21,13 @@ sendgrid_smtp_settings:
   authentication: plain
   port: 587
 
+mailgun_smtp_settings:
+  address: smtp.mailgun.org
+  domain: snacks.snackpackmailer.com
+  authentication: plain
+  port: 587
+
 template:
   renderable_providers:
     - sendgrid
+    - mailgun
