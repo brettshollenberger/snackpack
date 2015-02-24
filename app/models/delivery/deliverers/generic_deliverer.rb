@@ -9,6 +9,18 @@ class Delivery
           begin
             change_delivery_method(message, provider_name)
             circuit_breaker.call(message)
+          rescue Net::SMTPFatalError => e
+            # See http://www.serversmtp.com/en/smtp-error
+            case e.message
+            # 400-level errors (except 422) are deliverer failure errors.
+            # Acquire a different deliverer to deliver the message.
+            when /^4\d(0|1|[3-9])/
+              acquire_alternative_deliverer.deliver(message)
+            # 422 & 500-level errors should alert the caller to persist failures
+            else
+              raise e
+            end
+          # Deliverer did not respond in a timely manner. Use a different deliverer.
           rescue Timeout::Error
             puts "Timed out. Acquiring alternative deliverer"
             acquire_alternative_deliverer.deliver(message)

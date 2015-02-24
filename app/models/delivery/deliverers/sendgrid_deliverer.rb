@@ -15,7 +15,6 @@ class Delivery
 
       def self.delivery_adapter(message)
         message.deliver
-        puts "Delivered with Sendgrid"
       end
 
       def self.sendgrid_smtp_options

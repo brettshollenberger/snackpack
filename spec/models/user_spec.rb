@@ -55,5 +55,19 @@ describe User do
 
       expect(user_with_dup_email).to_not be_valid
     end
+
+    it "has valid roles" do
+      %w(recipient sender).each do |role|
+        user.role = role
+        expect(user).to be_valid
+      end
+    end
+
+    it "has valid statuses" do
+      %w(ok address_not_exist).each do |status|
+        user.status = status
+        expect(user).to be_valid
+      end
+    end
   end
 end

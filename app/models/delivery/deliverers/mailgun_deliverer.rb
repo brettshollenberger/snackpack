@@ -15,7 +15,6 @@ class Delivery
 
       def self.delivery_adapter(message)
         message.deliver
-        puts "Delivered with Mailgun"
       end
 
       def self.mailgun_smtp_options

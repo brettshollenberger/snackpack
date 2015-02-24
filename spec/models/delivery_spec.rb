@@ -1,3 +1,4 @@
+require 'circuit_breaker'
 require 'rails_helper'
 
 describe Delivery do
@@ -130,6 +131,80 @@ describe Delivery do
       allow(Delivery::Deliverers::GenericDeliverer).to receive(:acquire_alternative_deliverer).and_return(Delivery::Deliverers::MailgunDeliverer)
 
       expect { delivery.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
+    end
+
+    context "exception sending email" do
+      context "template error" do
+        before(:each) do
+          delivery.template.update(html: '<%= raise "FAIL" %>')
+        end
+
+        it "updates the status to failed" do
+          expect{delivery.deliver}.to raise_error
+          expect(delivery.status).to eq('failed')
+        end
+      end
+
+      context "SMTP error" do
+        context "users mailbox out of storage" do
+          it "marks the delivery as not_sent" do
+            allow_any_instance_of(CircuitBreaker).to receive(:call).and_raise(Net::SMTPFatalError.new("422 ERROR"))
+
+            expect{delivery.deliver}.to_not raise_error
+            expect(delivery.status).to eq 'not_sent'
+          end
+        end
+
+        context "deliverer error" do
+          it "delivers via an alternative deliverer if the initial deliverer fails with other 400 error" do
+            delivery.template.provider = "sendgrid"
+            @call_iteration = 1
+
+            allow(Delivery::Deliverers::SendgridDeliverer.circuit_breaker).to receive(:call).and_raise(Net::SMTPFatalError.new("420 ERROR"))
+
+            allow(Delivery::Deliverers::GenericDeliverer).to receive(:acquire_alternative_deliverer).and_return(Delivery::Deliverers::MailgunDeliverer)
+
+            expect(Delivery::Deliverers::MailgunDeliverer).to receive(:deliver)
+
+            expect{delivery.deliver}.to_not raise_error
+          end
+        end
+
+        context "email address does not exist" do
+          ["512", "550"].each do |error_code|
+            describe "for error_code #{error_code}" do
+              before(:each) do
+                allow_any_instance_of(CircuitBreaker).to receive(:call).and_raise(Net::SMTPFatalError.new("#{error_code} ERROR"))
+              end
+
+              it "marks the delivery as hard_bounced" do
+                expect{delivery.deliver}.to_not raise_error
+                expect(delivery.status).to eq 'hard_bounced'
+              end
+
+              it "should mark the recipient status to address_not_exist" do
+                expect{delivery.deliver}.to_not raise_error
+                expect(delivery.recipient.status).to eq 'address_not_exist'
+              end
+            end
+          end
+        end
+
+        context 'other hard bounces' do
+          ["541", "554"].each do |error_code|
+            describe "for error_code #{error_code}" do
+              before do
+                allow_any_instance_of(CircuitBreaker).to receive(:call).and_raise(Net::SMTPFatalError.new("#{error_code} ERROR"))
+              end
+
+              it "should mark the delivery as hard_bounced" do
+                expect{delivery.deliver}.to raise_error
+                expect(delivery.status).to eq 'hard_bounced'
+              end
+            end
+          end
+        end
+      end
     end
   end
 end

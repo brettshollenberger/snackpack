@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222020400) do
+ActiveRecord::Schema.define(version: 20150224040710) do
 
   create_table "deliveries", force: :cascade do |t|
     t.integer  "template_id",  limit: 4,                 null: false
@@ -62,9 +62,11 @@ ActiveRecord::Schema.define(version: 20150222020400) do
     t.integer  "role",       limit: 4,   default: 0
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "status",     limit: 4,   default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["status"], name: "index_users_on_status", using: :btree
 
   add_foreign_key "deliveries", "templates", name: "fk_template_id"
   add_foreign_key "deliveries", "users", column: "recipient_id", name: "fk_recipient_id"

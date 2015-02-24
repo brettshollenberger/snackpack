@@ -14,11 +14,44 @@ class Delivery < ActiveRecord::Base
 
   validates_presence_of :template, :recipient, :sender
 
+  after_commit :async_deliver, on: :create
+
+  # Public: Delivers the message
+  #
   def deliver
-    delivery_adapter.deliver(message)
-    update(status: 'sent', sent_at: Time.zone.now)
+    begin
+      delivery_adapter.deliver(message)
+      update(status: 'sent', sent_at: Time.zone.now)
+    rescue Net::SMTPFatalError => e
+      case e.message
+      when /^512/, /^550/
+        update(status: 'hard_bounced')
+        recipient.update(status: 'address_not_exist')
+      # Recipient's mailbox full
+      when /^422/
+        update(status: 'not_sent')
+      else
+        update(status: 'hard_bounced')
+        raise e
+      end
+    rescue StandardError => e
+      update(status: 'failed')
+      raise e
+    end
   end
 
+  # Public: Schedules a background job to deliver.
+  #
+  def async_deliver
+    if self.send_at.present?
+      Sidekiq::Client.enqueue_to_in("medium", self.send_at, DeliverySender, self.id)
+    else
+      Sidekiq::Client.enqueue_to("medium", DeliverySender, self.id)
+    end
+  end
+
+  # Public: Renders the mail using data from delivery
+  #
   def message
     if valid? and self.template.renderable?
       @message ||= MessageRenderer.new(

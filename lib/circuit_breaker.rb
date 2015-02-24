@@ -33,7 +33,6 @@ class CircuitBreaker
   # to become :closed, or another call fails, resetting the reset_timeout.
   #
   def call(*args)
-    puts status
     case status
     when :closed, :half_open
       begin
@@ -73,7 +72,6 @@ class CircuitBreaker
   # If enough remote calls have not been made to determine an :open or :half_open status, or 
   # enough remote calls have been successful, then the status is :closed.
   def status
-    puts percent_failed
     if recent_calls.count >= recent_minimum && percent_failed >= failure_threshold
       if (current_time - last_failure_time) > reset_timeout
         :half_open
