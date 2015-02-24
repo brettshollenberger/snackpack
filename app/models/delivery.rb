@@ -7,7 +7,7 @@ class Delivery < ActiveRecord::Base
 
   belongs_to :template
   belongs_to :campaign
-  belongs_to :recipient, :class_name => "User", :autosave => true
+  belongs_to :recipient, :autosave => true
   belongs_to :sender, :class_name => "User", :autosave => true
 
   serialize :data, JSON

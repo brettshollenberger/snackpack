@@ -6,8 +6,8 @@ class AddForeignKeysToDeliveries < ActiveRecord::Migration
   end
 
   def self.down
-    remove_foreign_key :deliveries, :templates, :name => :fk_template_id
-    remove_foreign_key :deliveries, :users, :name => :fk_recipient_id
-    remove_foreign_key :deliveries, :users, :name => :fk_sender_id
+    remove_foreign_key :deliveries, :name => :fk_template_id
+    remove_foreign_key :deliveries, :name => :fk_recipient_id
+    remove_foreign_key :deliveries, :name => :fk_sender_id
   end
 end

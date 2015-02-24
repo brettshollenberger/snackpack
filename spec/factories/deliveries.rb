@@ -4,7 +4,7 @@ FactoryGirl.define do
 
     association :campaign, :factory => :campaign
     association :template, :factory => :template
-    association :recipient, :factory => :user
+    association :recipient, :factory => :recipient
     association :sender, :factory => :user
   end
 

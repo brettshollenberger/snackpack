@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe Delivery do
   let(:sender)    { FactoryGirl.create(:user) }
-  let(:recipient) { FactoryGirl.create(:user) }
+  let(:recipient) { FactoryGirl.create(:recipient) }
   let(:delivery)  { FactoryGirl.create(:delivery, sender: sender, recipient: recipient) }
 
   it "has a sender" do

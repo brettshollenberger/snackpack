@@ -15,10 +15,6 @@ describe User do
     expect(user.email).to_not be_empty
   end
 
-  it "has a role" do
-    expect(user.role).to eq "sender"
-  end
-
   describe "validations" do
     it "is invalid without a first_name" do
       user.first_name = nil
@@ -38,12 +34,6 @@ describe User do
       expect(user).to_not be_valid
     end
 
-    it "is invalid without a role" do
-      user.role = nil
-
-      expect(user).to_not be_valid
-    end
-
     it "is not valid with an invalid email" do
       user.email = "not_an_email"
 
@@ -54,20 +44,6 @@ describe User do
       user_with_dup_email = FactoryGirl.build(:user, :email => user.email)
 
       expect(user_with_dup_email).to_not be_valid
-    end
-
-    it "has valid roles" do
-      %w(recipient sender).each do |role|
-        user.role = role
-        expect(user).to be_valid
-      end
-    end
-
-    it "has valid statuses" do
-      %w(ok address_not_exist).each do |status|
-        user.status = status
-        expect(user).to be_valid
-      end
     end
   end
 end
