@@ -22,7 +22,6 @@ class Delivery
             end
           # Deliverer did not respond in a timely manner. Use a different deliverer.
           rescue Timeout::Error
-            puts "Timed out. Acquiring alternative deliverer"
             acquire_alternative_deliverer.deliver(message)
           end
         end

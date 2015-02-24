@@ -207,4 +207,27 @@ describe Delivery do
       end
     end
   end
+
+  describe "#async_deliver" do
+    let(:delivery)  { FactoryGirl.build(:delivery, sender: sender, recipient: recipient) }
+
+    it "creates a sidekiq job" do
+      expect{delivery.async_deliver}.to change(DeliverySender.jobs, :size).by(1)
+    end
+
+    it "is called when Delivery is created" do
+      expect{delivery.save}.to change(DeliverySender.jobs, :size).by(1)
+      expect(DeliverySender.jobs.last["at"]).to be_blank
+    end
+
+    it "schedules on send_at if send_at is present" do
+      expect{create(:delivery, send_at: 1.hour.from_now)}.to change(DeliverySender.jobs, :size).by(1)
+      expect(DeliverySender.jobs.last["at"]).to be_present
+    end
+
+    it "pushes the job to medium queue by default" do
+      delivery.save
+      expect(DeliverySender.jobs.last["queue"]).to eq "medium"
+    end
+  end
 end
