@@ -21,7 +21,7 @@ describe Campaign, type: :model do
     end
   end
 
-  describe "#sent_count", :focus do
+  describe "#sent_count" do
     it "counts the number of successful deliveries in the campaign" do
       expect(campaign.sent_count).to eq 0
 
