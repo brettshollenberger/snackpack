@@ -3,7 +3,10 @@ require 'email_address_formatter'
 class Delivery < ActiveRecord::Base
   class MissingDeliveryAdapter < StandardError; end
 
+  scope :sent, -> { where(:status => :sent) }
+
   belongs_to :template
+  belongs_to :campaign
   belongs_to :recipient, :class_name => "User", :autosave => true
   belongs_to :sender, :class_name => "User", :autosave => true
 
@@ -96,6 +99,8 @@ private
     }
   end
 
+  # Private: Finds the adapter for the chosen mail provider
+  #
   def delivery_adapter
     adapter_name = "Delivery::Deliverers::#{template.provider.classify}Deliverer"
 

@@ -4,6 +4,7 @@ class Template < ActiveRecord::Base
   auto_strip_attributes :text
 
   has_many :deliveries
+  belongs_to :campaign
 
   enum provider: [:sendgrid, :mailgun]
   validates :name, :slug, :presence => true

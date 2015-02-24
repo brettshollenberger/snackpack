@@ -6,6 +6,8 @@ FactoryGirl.define do
     text "Email. Hi"
     provider "sendgrid"
 
+    association :campaign, factory: :campaign
+
     factory :send_with_us_template do
       provider "sendgrid"
     end

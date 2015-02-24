@@ -16,6 +16,7 @@ gem 'exception_notification'
 gem 'hashie'
 gem 'bugsnag'
 gem 'valid_email'
+gem 'devise'
 
 # Email providers
 gem 'send_with_us'
