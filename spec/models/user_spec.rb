@@ -15,6 +15,16 @@ describe User do
     expect(user.email).to_not be_empty
   end
 
+  it "has an authentication token" do
+    expect(user.authentication_token).to_not be_blank
+  end
+
+  it "finds user by authentication token" do
+    token = user.authentication_token
+
+    expect(User.find_by_authentication_token(token)).to eq user
+  end
+
   describe "validations" do
     it "is invalid without a first_name" do
       user.first_name = nil

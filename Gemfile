@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'pygments.rb'
+gem 'redcarpet'
 
 gem 'friendly_id'
 gem 'auto_strip_attributes'
@@ -17,6 +19,7 @@ gem 'hashie'
 gem 'bugsnag'
 gem 'valid_email'
 gem 'devise'
+gem 'mailcatcher'
 
 # Email providers
 gem 'send_with_us'
