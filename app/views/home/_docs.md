@@ -6,6 +6,12 @@
   * [Create](#create-template)
   * [Update](#update-template)
   * [Delete](#delete-template)
+* [Recipients](#recipients)
+  * [List](#list-recipients)
+  * [Show](#show-recipient)
+  * [Create](#create-recipient)
+  * [Update](#update-recipient)
+  * [Delete](#delete-recipient)
 * [Deliveries](#deliveries)
   * [List](#list-deliveries)
   * [Show](#show-delivery)
@@ -170,7 +176,6 @@ PUT api/v1/templates/1
 }
 ```
 
-
 ### Delete Template
 
 ```ruby
@@ -185,6 +190,172 @@ Users may delete their own templates.
 
 ```ruby
 DELETE api/v1/templates/1
+```
+
+#### Example Response: 
+
+```ruby
+204 No Content
+```
+
+## Recipients
+
+Recipients are the users you send your emails to. Whenever you send an email, that user will be added to your recipients list.
+
+### List Recipients
+```ruby
+GET api/v1/recipients
+```
+
+#### Permissions:
+
+Users may list their own recipients.
+
+#### Example Request:
+
+```ruby
+GET api/v1/recipients
+
+[
+	{
+		id: 1,
+		first_name: 'Aubrey',
+		last_name: 'Graham',
+		email: 'drizzy@drake.com',
+		status: "ok"
+	},
+	{
+		id: 2,
+		first_name: 'Lil',
+		last_name: 'Wayne',
+		email: 'youngmoney@ymc.mb',
+		status: "address_not_exist"
+	}
+]
+```
+
+### Show Recipient
+```ruby
+GET api/v1/recipients/:id
+```
+
+#### Permissions:
+
+Users may show their own recipients.
+
+#### Example Request:
+
+```ruby
+GET api/v1/recipients/1
+
+{
+		id: 1,
+		first_name: 'Aubrey',
+		last_name: 'Graham',
+		email: 'drizzy@drake.com,
+		status: "ok"
+}
+```
+
+### Create Recipient
+```ruby
+POST api/v1/recipients
+```
+
+#### Permissions:
+
+Users may create their own recipients.
+
+#### Parameters:
+
+| parameter | description | details | 
+| :-------- | :---------- | :------ |
+| first_name | required string | The recipient's first name | 
+| last_name | required string  | The recipient's last name | 
+| email     | required string  | The recipient's email address; must be unique within the scope of a given sender, but two senders can create different recipients with the same email address (and different names) |
+
+#### Example Request:
+
+```ruby
+POST api/v1/recipients
+
+{
+	first_name: 'Aubrey',
+	last_name: 'Graham',
+	email: 'drizzy@drake.com,
+}
+```
+
+#### Example Response: 
+
+```ruby
+201 Created
+Location: https://snackpackmailer.com/api/v1/recipients/1
+
+{
+	id: 1,
+	first_name: 'Aubrey',
+	last_name: 'Graham',
+	email: 'drizzy@drake.com,
+	status: "ok"
+}
+```
+
+### Update Recipient
+```ruby
+PUT api/v1/recipients/:id
+```
+
+#### Permissions:
+
+Users may update their own recipients.
+
+#### Parameters:
+
+| parameter | description | details | 
+| :-------- | :---------- | :------ |
+| first_name | optional string | The recipient's first name | 
+| last_name | optional string | The recipient's last name | 
+| email     | optional string | The recipient's email |
+
+#### Example Request:
+
+```ruby
+PUT api/v1/recipients/1
+
+{
+	email: "six_god@drake.com"
+}
+```
+
+#### Example Response: 
+
+```ruby
+200 OK
+
+{
+	id: 1,
+	first_name: 'Aubrey',
+	last_name: 'Graham',
+	email: 'six_god@drake.com,
+	status: "ok"
+}
+```
+
+### Delete Recipient
+
+```ruby
+DELETE api/v1/recipients/:id
+```
+
+#### Permissions:
+
+Users may delete their own recipients.
+
+#### Example Request:
+
+```ruby
+DELETE api/v1/recipients/1
 ```
 
 #### Example Response: 
