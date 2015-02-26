@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  # For JSON API, protect with null_session
+  protect_from_forgery with: :null_session, if: proc { |c| c.request.format == 'application/json' }
+
   respond_to :html, :json
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
