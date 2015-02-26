@@ -11,11 +11,18 @@ protected
     devise_parameter_sanitizer.for(:account_update) << :first_name << :last_name
   end
 
+  def not_permitted
+    { :json => {success: false, 
+                error: "You don't have permission.",
+                status:  "401"}, 
+                :status => "401" }
+  end
+
   def authorize
     if !signed_in? && !authenticate_user_from_token
       case request.format
       when Mime::JSON
-        render nothing: true, status: :unauthorized
+        render not_permitted and return
       else
         session[:return_to] = request.original_url
         redirect_to login_url
