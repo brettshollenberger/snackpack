@@ -41,15 +41,25 @@ module Api
 
     private
       def queryable_params
-        params.permit(:campaign_id, :template_id)
+        strong_params = params.permit(:campaign_id, :template_id)
+
+        if params[:status].present?
+          strong_params.merge!(status: Delivery.statuses[params[:status]])
+        end
+
+        strong_params
       end
 
       def delivery_params
-        strong_params = params.permit(:template_id, :recipient_id, :campaign_id, :send_at, :data)
+        strong_params = params.permit(:template_id, :recipient_id, :campaign_id, :send_at)
 
         if recipient_params.present?
           recipient = current_user.recipients.where(recipient_params).first_or_initialize
           strong_params.merge!(recipient: recipient)
+        end
+
+        if params[:data].present?
+          strong_params.merge!(data: params[:data])
         end
 
         strong_params

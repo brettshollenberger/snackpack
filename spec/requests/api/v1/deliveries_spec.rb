@@ -96,6 +96,25 @@ describe "Deliveries API :" do
           end
         end
       end
+
+      describe "Filtering by status :" do
+        before(:each) do
+          Delivery.first.update(status: :sent)
+          get api_v1_deliveries_path, { status: "sent" }
+        end
+
+        it "It is a successful request" do
+          expect(response).to be_success
+        end
+
+        it "It responds with only deliveries that have the given status" do
+          expect(json.length).to eq(1)
+
+          json.each do |delivery|
+            expect(delivery.status).to eq "sent"
+          end
+        end
+      end
     end
   end
 
@@ -211,6 +230,10 @@ describe "Deliveries API :" do
 
         it "It renders the recently created delivery" do
           expect(json.id).to eql(@new_delivery.id)
+        end
+
+        it "Adds valid data" do
+          expect(@new_delivery.data).to eq({"company_name" => "YMCMB"})
         end
       end
 
