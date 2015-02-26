@@ -86,11 +86,13 @@ private
       snackpack: {
         template_id: self.template.try(:to_param),
         recipient: {
+          full_name: self.recipient.full_name,
           first_name: self.recipient.first_name,
           last_name: self.recipient.last_name,
           email: self.recipient.email
         },
         sender: {
+          full_name: self.sender.full_name,
           first_name: self.sender.first_name,
           last_name: self.sender.last_name,
           email: self.sender.email

@@ -1,14 +1,13 @@
 class Template < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :name, :use => [:slugged]
   auto_strip_attributes :text
 
   has_many :deliveries
   belongs_to :campaign
+  belongs_to :user
 
   enum provider: [:sendgrid, :mailgun]
-  validates :name, :slug, :presence => true
-  validates :name, :slug, :subject, :length => { :in => 1..255 }
+  validates :name, :user, :presence => true
+  validates :name, :subject, :length => { :in => 1..255 }
 
   # Public: Returns true if the Template can be previewed.
   def renderable?

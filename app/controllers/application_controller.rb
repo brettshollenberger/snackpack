@@ -18,6 +18,12 @@ protected
                 :status => "401" }
   end
 
+  def not_found
+    { :json => {success: false,
+                error: "Resource not found",
+                status: "404"}, status: :not_found }
+  end
+
   def authorize
     if !signed_in? && !authenticate_user_from_token
       case request.format

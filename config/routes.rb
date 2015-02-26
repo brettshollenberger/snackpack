@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, :only => [:index, :show]
       resources :recipients, :only => [:index, :show, :create, :update, :destroy]
+      resources :templates, :only => [:index, :show, :create, :update, :destroy]
     end
   end
 end

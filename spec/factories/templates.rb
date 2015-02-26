@@ -7,6 +7,7 @@ FactoryGirl.define do
     provider "sendgrid"
 
     association :campaign, factory: :campaign
+    association :user, factory: :user
 
     factory :send_with_us_template do
       provider "sendgrid"

@@ -11,10 +11,6 @@ describe Template do
     expect(template.name).to eq "My Email Template"
   end
 
-  it "has a slug" do
-    expect(template.slug).to eq "my-email-template"
-  end
-
   it "has a subject" do
     expect(template.subject).to eq "An Email For You!"
   end
@@ -56,18 +52,6 @@ describe Template do
 
     it "is invalid with a name longer than 255 characters" do
       template.name = char(256)
-
-      expect(template).to_not be_valid
-    end
-
-    it "is valid with a slug up to 255 charcters" do
-      template.slug = char(255)
-
-      expect(template).to be_valid
-    end
-
-    it "is invalid with a slug longer than 255 characters" do
-      template.slug = char(256)
 
       expect(template).to_not be_valid
     end

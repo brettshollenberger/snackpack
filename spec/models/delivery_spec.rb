@@ -60,11 +60,11 @@ describe Delivery do
     it "returns sanitized Hashie::Mash of its data + defaults" do
       delivery.data = { body: "1 > 0", body_html: "<p>hello</p>" }
 
-      expect(delivery.data_hash.body).to                      eq("1 &gt; 0")
-      expect(delivery.data_hash.body_html).to                 eq("<p>hello</p>")
-      expect(delivery.data_hash.snackpack.template_id).to     eq(delivery.template.slug)
-      expect(delivery.data_hash.snackpack.recipient.email).to eq(delivery.recipient.email)
-      expect(delivery.data_hash.snackpack.sender.email).to    eq(delivery.sender.email)
+      expect(delivery.data_hash.body). to                      eq("1 &gt; 0")
+      expect(delivery.data_hash.body_html).to                  eq("<p>hello</p>")
+      expect(delivery.data_hash.snackpack.template_id.to_i).to eq(delivery.template.id)
+      expect(delivery.data_hash.snackpack.recipient.email).to  eq(delivery.recipient.email)
+      expect(delivery.data_hash.snackpack.sender.email).to     eq(delivery.sender.email)
     end
   end
 

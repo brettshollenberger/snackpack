@@ -103,7 +103,8 @@ Users may create their own templates.
 | name      | required string | The name of the template. Must be unique to the template creator | 
 | subject      | optional string, default "No subject" | The subject of the email | 
 | html      | optional ERB HTML string; required if text is absent | The HTML portion of the email |
-| text      | optional ERB plaintext string; required if html is absent | The text portion of the email | 
+| text      | optional ERB plaintext string; required if html is absent | The text portion of the email |
+| campaign_id | optional integer | The primary key of the campaign |
 
 
 #### Example Request:
@@ -115,7 +116,8 @@ POST api/v1/templates
 	name: "My Great Email Template",
 	subject: "Thanks for signing up!",
 	html: "<p><%%= recipient.full_name %>, you rock!</p>"
-	text: "<%%= recipient.full_name %>, you rock!"
+	text: "<%%= recipient.full_name %>, you rock!",
+	campaign_id: 1
 }
 ```
 
@@ -130,7 +132,12 @@ Location: https://snackpackmailer.com/api/v1/templates/1
 	name: "My Great Email Template",
 	subject: "Thanks for signing up!",
 	html: "<p><%%= recipient.full_name %>, you rock!</p>"
-	text: "<%%= recipient.full_name %>, you rock!"
+	text: "<%%= recipient.full_name %>, you rock!",
+	campaign: {
+		id: 1,
+		name: "My Great Email Campaign",
+		queue: "medium"
+	}
 }
 ```
 
@@ -151,6 +158,8 @@ Users may update their own templates.
 | subject      | optional string | The subject of the email | 
 | html      | optional ERB HTML string | The HTML portion of the email |
 | text      | optional ERB plaintext string | The text portion of the email | 
+| campaign_id | optional integer | The primary key of the campaign |
+
 
 #### Example Request:
 

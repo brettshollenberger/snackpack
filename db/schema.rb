@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150226030320) do
+ActiveRecord::Schema.define(version: 20150226053647) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",       limit: 255,                    null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20150226030320) do
     t.integer  "campaign_id",  limit: 4,                 null: false
   end
 
-  add_index "deliveries", ["campaign_id"], name: "fk_rails_81af32d26a", using: :btree
+  add_index "deliveries", ["campaign_id"], name: "fk_rails_9516e8bd4a", using: :btree
   add_index "deliveries", ["recipient_id"], name: "fk_recipient_id", using: :btree
   add_index "deliveries", ["sender_id"], name: "fk_sender_id", using: :btree
   add_index "deliveries", ["template_id"], name: "fk_template_id", using: :btree
@@ -66,22 +66,21 @@ ActiveRecord::Schema.define(version: 20150226030320) do
 
   add_index "recipients", ["email"], name: "index_recipients_on_email", unique: true, using: :btree
   add_index "recipients", ["sender_id", "email"], name: "index_recipients_on_sender_id_and_email", unique: true, using: :btree
-  add_index "recipients", ["sender_id"], name: "index_recipients_on_sender_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",        limit: 255,               null: false
-    t.string   "slug",        limit: 255,               null: false
     t.string   "subject",     limit: 255
     t.text     "html",        limit: 65535
     t.text     "text",        limit: 65535
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.integer  "provider",    limit: 4,     default: 0
-    t.integer  "campaign_id", limit: 4,                 null: false
+    t.integer  "campaign_id", limit: 4
+    t.integer  "user_id",     limit: 4,                 null: false
   end
 
-  add_index "templates", ["campaign_id"], name: "fk_rails_bb8ba80917", using: :btree
-  add_index "templates", ["slug"], name: "index_templates_on_slug", unique: true, using: :btree
+  add_index "templates", ["campaign_id"], name: "fk_rails_dc0d63b17f", using: :btree
+  add_index "templates", ["user_id"], name: "fk_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             limit: 255,              null: false
@@ -113,5 +112,7 @@ ActiveRecord::Schema.define(version: 20150226030320) do
   add_foreign_key "deliveries", "recipients", name: "fk_recipient_id"
   add_foreign_key "deliveries", "templates", name: "fk_template_id"
   add_foreign_key "deliveries", "users", column: "sender_id", name: "fk_sender_id"
+  add_foreign_key "recipients", "users", column: "sender_id"
   add_foreign_key "templates", "campaigns"
+  add_foreign_key "templates", "users", name: "fk_user_id"
 end
