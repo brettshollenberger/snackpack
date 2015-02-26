@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 describe Recipient do
-  let(:recipient) { create(:recipient) }
+  let(:sender)    { create(:user) } 
+  let(:sender2)   { create(:user) } 
+  let(:recipient) { create(:recipient, sender: sender) }
+
+  it "belongs to a sender" do
+    expect(recipient.sender).to be sender
+  end
 
   describe "validations" do
     it "is valid" do
@@ -28,6 +34,16 @@ describe Recipient do
         recipient.status = status
         expect(recipient).to be_valid
       end
+    end
+
+    it "has a unique email within the context of a sender" do
+      recipient2 = build(:recipient, email: recipient.email, sender: sender)
+
+      expect(recipient2).to_not be_valid
+
+      recipient2.sender = sender2
+
+      expect(recipient2).to be_valid
     end
   end
 end

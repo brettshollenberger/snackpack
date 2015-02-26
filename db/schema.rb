@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225075112) do
+ActiveRecord::Schema.define(version: 20150226030320) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",       limit: 255,                    null: false
@@ -61,9 +61,12 @@ ActiveRecord::Schema.define(version: 20150225075112) do
     t.integer  "status",     limit: 4,   default: 0
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "sender_id",  limit: 4,               null: false
   end
 
   add_index "recipients", ["email"], name: "index_recipients_on_email", unique: true, using: :btree
+  add_index "recipients", ["sender_id", "email"], name: "index_recipients_on_sender_id_and_email", unique: true, using: :btree
+  add_index "recipients", ["sender_id"], name: "index_recipients_on_sender_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",        limit: 255,               null: false

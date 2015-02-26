@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
          :confirmable
 
   has_many :deliveries, :foreign_key => :sender_id
+  has_many :recipients, :foreign_key => :sender_id
 
   validates_presence_of :first_name, :last_name, :email
   validates :email, :email => true, :uniqueness => true
