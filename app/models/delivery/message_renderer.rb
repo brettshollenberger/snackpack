@@ -13,7 +13,7 @@ class Delivery
 
     def render
       renderer = self
-      
+
       Mail.new do
         subject renderer.subject
         to renderer.to

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :users, :only => [:index, :show]
       resources :recipients, :only => [:index, :show, :create, :update, :destroy]
       resources :templates, :only => [:index, :show, :create, :update, :destroy]
+      resources :deliveries, :only => [:index, :show, :create]
     end
   end
 end

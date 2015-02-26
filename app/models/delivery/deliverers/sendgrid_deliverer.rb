@@ -18,7 +18,7 @@ class Delivery
       end
 
       def self.sendgrid_smtp_options
-        CONFIG.sendgrid_smtp_settings.merge(
+        CONFIG.sendgrid_smtp_settings[Rails.env].merge(
           user_name: Rails.application.secrets.sendgrid_user_name,
           password: Rails.application.secrets.sendgrid_password,
           enable_starttls_auto: true

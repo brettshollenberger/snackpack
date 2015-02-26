@@ -18,7 +18,7 @@ class Delivery
       end
 
       def self.mailgun_smtp_options
-        CONFIG.mailgun_smtp_settings.merge(
+        CONFIG.mailgun_smtp_settings[Rails.env].merge(
           user_name: Rails.application.secrets.mailgun_user_name,
           password: Rails.application.secrets.mailgun_password,
           enable_starttls_auto: true

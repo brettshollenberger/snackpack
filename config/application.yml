@@ -15,17 +15,37 @@ delivery:
   store_period_in_months: 2
   s3_bucket: 'snackpack'
 
-sendgrid_smtp_settings:
-  address: smtp.sendgrid.net
-  domain: snackpack.delivery
+development_smtp: &development_smtp
+  address: localhost
+  domain: localhost
   authentication: plain
-  port: 587
+  port: 1025
+
+sendgrid_smtp_settings:
+  sendgrid_defaults: &sendgrid_defaults
+    address: smtp.sendgrid.net
+    domain: snackpack.delivery
+    authentication: plain
+    port: 587
+  production:
+    <<: *sendgrid_defaults
+  development:
+    <<: *development_smtp
+  test:
+    <<: *sendgrid_defaults
 
 mailgun_smtp_settings:
-  address: smtp.mailgun.org
-  domain: snacks.snackpackmailer.com
-  authentication: plain
-  port: 587
+  mailgun_defaults: &mailgun_defaults
+    address: smtp.mailgun.org
+    domain: snacks.snackpackmailer.com
+    authentication: plain
+    port: 587
+  production:
+    <<: *mailgun_defaults
+  development:
+    <<: *development_smtp
+  test:
+    <<: *mailgun_defaults
 
 template:
   renderable_providers:

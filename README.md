@@ -468,8 +468,10 @@ Users may create their own deliveries.
 | :-------- | :---------- | :------ |
 | recipient_id      | optional string; required if recipient is absent | The id of the recipient, if a recipient has already been created | 
 | recipient      | optional hash | A hash containing the first_name, last_name, and email of the recipient | 
+| data | optional hash | The object to use to fill in the template |
 | template_id      | required integer | The id of the template to use for the delivery |
-| campaign_id      | required integer | The id of the campaign to use for the delivery | 
+| campaign_id      | required integer | The id of the campaign to use for the delivery |
+| send_at | optional datetime | The datetime to send the email at |
 
 
 #### Example Request:
@@ -480,7 +482,11 @@ POST api/v1/deliveries
 {
 	recipient_id: 1,
 	template_id: 1,
-	campaign_id: 1
+	campaign_id: 1,
+	data: {
+		company_name: "My Great Company"
+	},
+	send_at: "Wed Feb 25 2015 22:50:54"
 }
 ```
 
@@ -689,3 +695,4 @@ DELETE api/v1/campaigns/1
 ```ruby
 204 No Content
 ```
+
