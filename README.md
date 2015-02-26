@@ -399,6 +399,7 @@ Users may list their own deliveries.
 
 | parameter | description | details | 
 | :-------- | :---------- | :------ |
+| status    | optional string | Lists deliveries of the given status (created, sent, not_sent, failed, hard_bounced)|
 | campaign_id | optional integer | List all deliveries associated with a campaign | 
 | template_id      | optional integer | List all deliveries associated with a template | 
 
@@ -695,4 +696,3 @@ DELETE api/v1/campaigns/1
 ```ruby
 204 No Content
 ```
-
