@@ -277,105 +277,49 @@ describe "Deliveries API :" do
     end
   end
 
-  # describe "Update Action :" do
-  #   before(:each) do
-  #     def valid_delivery_json
-  #       { :format => :json, :subject => "New subject" }
-  #     end
-  #   end
+  describe "Delete Action :" do
+    describe "When not authenticated :" do
+      before(:each) do
+        delete api_v1_delivery_path(@delivery)
+      end
 
-  #   describe "When not authenticated :" do
-  #     before(:each) do
-  #       put api_v1_delivery_path(@delivery), valid_delivery_json
-  #     end
+      it "It is not successful" do
+        expect(response).to_not be_success
+      end
 
-  #     it "is not a successful request" do
-  #       expect(response).to_not be_success
-  #     end
+      it "It renders an error message" do
+        expect(json.error).to eql("You don't have permission.")
+      end
+    end
 
-  #     it "renders an error message" do
-  #       expect(json.error).to eql("You don't have permission.")
-  #     end
-  #   end
+    describe "When authenticated :" do
+      before(:each) do
+        login(user)
+      end
 
-  #   describe "When authenticated :" do
-  #     before(:each) do
-  #       login(user)
-  #     end
+      describe "When the user owns the delivery :" do
+        before(:each) do
+          delete api_v1_delivery_path(@delivery)
+        end
 
-  #     describe "If I own the delivery :" do
-  #       before(:each) do
-  #         put api_v1_delivery_path(@delivery), valid_delivery_json
-  #       end
+        it "is a successful request" do
+          expect(response.status).to eq 204
+        end
+      end
 
-  #       it "It is a successful request" do
-  #         expect(response).to be_success
-  #       end
+      describe "When the user does not own the delivery :" do
+        before(:each) do
+          delete api_v1_delivery_path(@other_users_delivery)
+        end
 
-  #       it "It renders the recently updated delivery" do
-  #         expect(json.subject).to eql("New subject")
-  #       end
-  #     end
+        it "is not a successful request" do
+          expect(response).to_not be_success
+        end
 
-  #     describe "If I do not own the delivery :" do
-  #       before(:each) do
-  #         put api_v1_delivery_path(@other_users_delivery), valid_delivery_json
-  #       end
-
-  #       it "It is not a successful request" do
-  #         expect(response).to_not be_success
-  #       end
-
-  #       it "It renders an error message" do
-  #         expect(json.error).to eql("You don't have permission.")
-  #       end
-  #     end
-  #   end
-  # end
-
-  # describe "Delete Action :" do
-  #   describe "When not authenticated :" do
-  #     before(:each) do
-  #       delete api_v1_delivery_path(@delivery)
-  #     end
-
-  #     it "It is not successful" do
-  #       expect(response).to_not be_success
-  #     end
-
-  #     it "It renders an error message" do
-  #       expect(json.error).to eql("You don't have permission.")
-  #     end
-  #   end
-
-  #   describe "When authenticated :" do
-  #     before(:each) do
-  #       login(user)
-  #     end
-
-  #     describe "When the user owns the delivery :" do
-  #       before(:each) do
-  #         delete api_v1_delivery_path(@delivery)
-  #       end
-
-  #       it "is a successful request" do
-  #         expect(response.status).to eq 204
-  #       end
-  #     end
-
-  #     describe "When the user does not own the delivery :" do
-  #       before(:each) do
-  #         delete api_v1_delivery_path(@other_users_delivery)
-  #       end
-
-  #       it "is not a successful request" do
-  #         expect(response).to_not be_success
-  #       end
-
-  #       it "does not display resource to the user" do
-  #         expect(json.error).to eql("You don't have permission.")
-  #       end
-  #     end
-  #   end
-  # end
+        it "does not display resource to the user" do
+          expect(json.error).to eql("You don't have permission.")
+        end
+      end
+    end
+  end
 end

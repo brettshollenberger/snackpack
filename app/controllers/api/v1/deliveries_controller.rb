@@ -21,23 +21,14 @@ module Api
         render unprocessable_entity(@delivery)
       end
 
-      # def update
-      #   rescue_401_or_404 do
-      #     @delivery = current_user.deliveries.find(params[:id])
+      def destroy
+        rescue_401_or_404 do
+          @delivery = current_user.deliveries.find(params[:id])
 
-      #     render :show and return if @delivery.update(delivery_params)
-      #     render unprocessable_entity(@delivery)
-      #   end
-      # end
-
-      # def destroy
-      #   rescue_401_or_404 do
-      #     @delivery = current_user.deliveries.find(params[:id])
-
-      #     render deleted and return if !@delivery.nil? && @delivery.destroy
-      #     render not_permitted
-      #   end
-      # end
+          render deleted and return if !@delivery.nil? && @delivery.destroy
+          render not_permitted
+        end
+      end
 
     private
       def queryable_params
