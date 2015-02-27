@@ -75,6 +75,8 @@ Send your first email delivery below. Remember: this sends a real email!
  example-data='{"recipient": {"first_name": "Drizzy", "last_name": "Drake", "email": "drizzy@drake.net"}, "template_id": 1, "campaign_id": 1}'>
 </div>
 
+Now you should have sent your first email! Read the rest of the docs below as necessary.
+
 # Documentation
 
 ## Templates
