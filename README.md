@@ -1,5 +1,6 @@
 # Snackpack API
 
+* [Auth Token](#auth-token)
 * [Templates](#templates)
   * [List](#list-templates)
   * [Show](#show-template)
@@ -23,6 +24,14 @@
   * [Create](#create-campaign)
   * [Update](#update-campaign)
   * [Delete](#delete-campaign)
+
+## Auth Token
+
+When you need to make requests to the API from another location, you'll need your auth_token. You can use your auth_token in the Authorization Header ("auth_token YOUR_TOKEN") or as the `auth_token` query parameter.
+
+```ruby
+GET api/v1/auth_token
+```
 
 ## Templates
 
