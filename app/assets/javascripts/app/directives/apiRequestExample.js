@@ -13,6 +13,7 @@ angular
         scope.exampleData     = exampleData;
         scope.noData          = !_.isUndefined(attrs.noData);
         scope.createsDelivery = !_.isUndefined(attrs.createsDelivery);
+        scope.quickstart      = !_.isUndefined(attrs.quickstart);
 
         function replacer(match, pIndent, pKey, pVal, pEnd) {
           var key = '<span class="json-key">';

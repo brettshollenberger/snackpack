@@ -24,6 +24,39 @@
   * [Update](#update-campaign)
   * [Delete](#delete-campaign)
 
+### TL;DR Quick Start Example:
+
+#### Create Template:
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/templates"
+ quickstart
+ example-data='{"name": "My Great Template", "subject": "Welcome to our campaign", "html": "<p>Welcome, <%%= recipient.first_name %>.</p>", "text": "Welcome <%%= recipient.first_name %>."}'>
+</div>
+
+#### Create Campaign: 
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/campaigns"
+ quickstart
+ example-data='{"name": "My Great Campaign", "queue": "high"}'>
+</div>
+
+#### Create Delivery:
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/deliveries"
+ creates-delivery
+ quickstart
+ example-data='{"recipient": {"first_name": "Drizzy", "last_name": "Drake", "email": "drizzy@drake.net"}, "template_id": 1, "campaign_id": 1}'>
+</div>
+
 ## Templates
 
 Templates are used to create emails. They can contain a subject, html, and text field to be used in the template, and can use `ERB` syntax to pass values into the template. 
@@ -554,7 +587,7 @@ POST api/v1/deliveries
  api-request-example 
  method="POST" 
  url="api/v1/deliveries"
- createsDelivery
+ creates-delivery
  example-data='{"recipient": {"first_name": "Drizzy", "last_name": "Drake", "email": "drizzy@drake.net"}, "template_id": 1, "campaign_id": 1}'>
 </div>
 
