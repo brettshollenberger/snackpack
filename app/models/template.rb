@@ -8,6 +8,7 @@ class Template < ActiveRecord::Base
   enum provider: [:sendgrid, :mailgun]
   validates :name, :user, :presence => true
   validates :name, :subject, :length => { :in => 1..255 }
+  validates_uniqueness_of :name, :scope => [:user]
 
   # Public: Returns true if the Template can be previewed.
   def renderable?

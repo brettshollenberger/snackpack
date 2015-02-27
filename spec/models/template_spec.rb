@@ -7,10 +7,6 @@ describe Template do
     (1..n).map { |n| "c" }.join("")
   end
 
-  it "has a name" do
-    expect(template.name).to eq "My Email Template"
-  end
-
   it "has a subject" do
     expect(template.subject).to eq "An Email For You!"
   end
@@ -42,6 +38,11 @@ describe Template do
     it "is invalid without a name" do
       template.name = nil
       expect(template).to_not be_valid
+    end
+
+    it "is not valid with the same name and user of another template" do
+      template2 = build(:template, user: template.user, name: template.name)
+      expect(template2).to_not be_valid
     end
 
     it "is valid with a name up to 255 charcters" do

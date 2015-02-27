@@ -3,7 +3,8 @@ require 'email_address_formatter'
 class Delivery < ActiveRecord::Base
   class MissingDeliveryAdapter < StandardError; end
 
-  scope :sent, -> { where(:status => :sent) }
+  scope :sent,      -> { where(:status => :sent) }
+  scope :attempted, -> { where("status <> ?", :created) }
 
   belongs_to :template
   belongs_to :campaign

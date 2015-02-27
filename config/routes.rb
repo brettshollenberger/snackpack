@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :recipients, :only => [:index, :show, :create, :update, :destroy]
       resources :templates, :only => [:index, :show, :create, :update, :destroy]
       resources :deliveries, :only => [:index, :show, :create, :destroy]
+      resources :campaigns, :only => [:index, :show, :create, :update, :destroy]
     end
   end
 end

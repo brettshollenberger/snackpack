@@ -12,7 +12,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pygments.rb'
 gem 'redcarpet'
 
-gem 'friendly_id'
 gem 'auto_strip_attributes'
 gem 'exception_notification'
 gem 'hashie'

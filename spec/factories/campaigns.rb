@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :campaign do
-    name "My Campaign"
+    sequence(:name) { |n| "My Campaign #{n}" }
     queue "medium"
+
+    association :user, :factory => :user
   end
 end
