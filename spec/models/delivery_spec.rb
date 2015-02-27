@@ -123,6 +123,27 @@ describe Delivery do
       expect(delivery.sent_at).to be_present
     end
 
+    it "delivers with SMTP for mailgun provider" do
+      delivery.template = create(:mailgun_template)
+
+      expect { delivery.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
+      expect(delivery.status).to eq 'sent'
+      expect(delivery.sent_at).to be_present
+    end
+
+    it "will not redeliver if it has already been sent" do
+      delivery.update(status: :sent)
+
+      expect { delivery.deliver }.to_not change(ActionMailer::Base.deliveries, :size)
+    end
+
+    it "will not deliver to an already-known bad address" do
+      delivery.recipient.update(:status => :address_not_exist)
+
+      expect { delivery.deliver }.to_not change(ActionMailer::Base.deliveries, :size)
+      expect(delivery.status).to eq "not_sent"
+    end
+
     it "acquires an alternative deliverer if a timeout occurs on the preferred deliverer" do
       delivery.template = create(:sendgrid_template)
 

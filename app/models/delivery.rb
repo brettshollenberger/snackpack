@@ -22,25 +22,46 @@ class Delivery < ActiveRecord::Base
   # Public: Delivers the message
   #
   def deliver
+    return false if sent?
+
+    if undeliverable?
+      update(status: "not_sent")
+      return false
+    end
+
     begin
       delivery_adapter.deliver(message)
       update(status: 'sent', sent_at: Time.zone.now)
     rescue Net::SMTPFatalError => e
-      case e.message
-      when /^512/, /^550/
-        update(status: 'hard_bounced')
-        recipient.update(status: 'address_not_exist')
-      # Recipient's mailbox full
-      when /^422/
-        update(status: 'not_sent')
-      else
-        update(status: 'hard_bounced')
-        raise e
-      end
+      handle_smtp_error(e)
     rescue StandardError => e
       update(status: 'failed')
       raise e
     end
+  end
+
+  # Public: The delivery has been sent
+  #
+  def sent?
+    status == "sent"
+  end
+
+  # Public: The delivery has not been sent
+  #
+  def unsent?
+    !sent?
+  end
+
+  # Public: The delivery is not already known to be impossible
+  #
+  def deliverable?
+    recipient.status != "address_not_exist"
+  end
+
+  # Public: The delivery is already known to be impossible
+  #
+  def undeliverable?
+    !deliverable?
   end
 
   # Public: Schedules a background job to deliver.
@@ -108,6 +129,23 @@ private
       adapter_name.constantize
     rescue LoadError
       raise MissingDeliveryAdapter, "#{adapter_name} not defined"
+    end
+  end
+
+  # Private: When deliveries raise errors that are not the fault of the deliverer,
+  # update the model appropriately
+  #
+  def handle_smtp_error(error)
+    case error.message
+    when /^512/, /^550/
+      update(status: 'hard_bounced')
+      recipient.update(status: 'address_not_exist')
+      # Recipient's mailbox full
+    when /^422/
+      update(status: 'not_sent')
+    else
+      update(status: 'hard_bounced')
+      raise error
     end
   end
 end

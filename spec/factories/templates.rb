@@ -9,12 +9,12 @@ FactoryGirl.define do
     association :campaign, factory: :campaign
     association :user, factory: :user
 
-    factory :send_with_us_template do
+    factory :sendgrid_template do
       provider "sendgrid"
     end
 
-    factory :sendgrid_template do
-      provider "sendgrid"
+    factory :mailgun_template do
+      provider "mailgun"
     end
   end
 end
