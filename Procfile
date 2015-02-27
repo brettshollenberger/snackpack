@@ -1,2 +1,2 @@
-rails: bundle exec rails server puma -p 3001
+rails: bundle exec unicorn_rails -p 3001
 sidekiq: bundle exec sidekiq -C config/sidekiq.yml

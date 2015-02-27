@@ -17,6 +17,6 @@ test:
 production:
   <<: *default
   database: snackpack_production
-  username: snackpack
+  username: root
   pool: 25
-  password: <%= ENV['SNACKPACK_DATABASE_PASSWORD'] %>
+  password:

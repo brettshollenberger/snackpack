@@ -37,7 +37,10 @@ gem 'capistrano'
 gem 'capistrano-puma'
 
 # Webserver
-gem 'puma'
+gem 'unicorn'
+
+# Process monitor
+gem 'god'
 
 # Speed-optimized JSON handling
 gem 'oj'
