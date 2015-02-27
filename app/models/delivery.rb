@@ -17,6 +17,7 @@ class Delivery < ActiveRecord::Base
   auto_strip_attributes :data
 
   validates_presence_of :template, :recipient, :sender
+  validates_uniqueness_of :recipient_id, :scope => [:template_id, :campaign_id]
 
   after_commit :async_deliver, on: :create
 

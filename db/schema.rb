@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227044611) do
+ActiveRecord::Schema.define(version: 20150227081441) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",       limit: 255,                    null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150227044611) do
   end
 
   add_index "campaigns", ["name", "user_id"], name: "index_campaigns_on_name_and_user_id", unique: true, using: :btree
-  add_index "campaigns", ["user_id"], name: "fk_rails_e646c460d9", using: :btree
+  add_index "campaigns", ["user_id"], name: "fk_rails_d5ca668f2d", using: :btree
 
   create_table "deliveries", force: :cascade do |t|
     t.integer  "template_id",  limit: 4,                 null: false
@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 20150227044611) do
     t.integer  "campaign_id",  limit: 4,                 null: false
   end
 
-  add_index "deliveries", ["campaign_id"], name: "fk_rails_7a9e686586", using: :btree
+  add_index "deliveries", ["campaign_id"], name: "fk_rails_af90e3ac35", using: :btree
   add_index "deliveries", ["recipient_id"], name: "fk_recipient_id", using: :btree
   add_index "deliveries", ["sender_id"], name: "fk_sender_id", using: :btree
-  add_index "deliveries", ["template_id"], name: "fk_template_id", using: :btree
+  add_index "deliveries", ["template_id", "campaign_id", "recipient_id"], name: "index_deliveries_on_template_id_and_campaign_id_and_recipient_id", unique: true, using: :btree
 
   create_table "recipients", force: :cascade do |t|
     t.string   "first_name", limit: 255,             null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20150227044611) do
     t.integer  "user_id",     limit: 4,                            null: false
   end
 
-  add_index "templates", ["campaign_id"], name: "fk_rails_87ef3c4502", using: :btree
+  add_index "templates", ["campaign_id"], name: "fk_rails_e130c9791e", using: :btree
   add_index "templates", ["name", "user_id"], name: "index_templates_on_name_and_user_id", unique: true, using: :btree
   add_index "templates", ["user_id"], name: "fk_user_id", using: :btree
 

@@ -54,6 +54,14 @@ describe Delivery do
       delivery.sender = nil
       expect(delivery).to_not be_valid
     end
+
+    it "is not valid with duplicate recipient_id, template_id, campaign_id key" do
+      delivery2 = build(:delivery, recipient: delivery.recipient,
+                                   template: delivery.template,
+                                   campaign: delivery.campaign)
+
+      expect(delivery2).to_not be_valid
+    end
   end
 
   describe "#data_hash" do
