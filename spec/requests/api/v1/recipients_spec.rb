@@ -169,7 +169,6 @@ describe "Recipients API :" do
         end
 
         it "It renders a 422 unprocessable entity" do
-          expect(json.error).to eq "Unprocessable entity"
           expect(json.status).to eq "422"
         end
       end
@@ -230,7 +229,6 @@ describe "Recipients API :" do
         end
 
         it "It renders a 422 unprocessable entity" do
-          expect(json.error).to eq "Unprocessable entity"
           expect(json.status).to eq "422"
         end
       end
