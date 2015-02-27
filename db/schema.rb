@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150227044611) do
   end
 
   add_index "campaigns", ["name", "user_id"], name: "index_campaigns_on_name_and_user_id", unique: true, using: :btree
-  add_index "campaigns", ["user_id"], name: "fk_rails_d26f457976", using: :btree
+  add_index "campaigns", ["user_id"], name: "fk_rails_e646c460d9", using: :btree
 
   create_table "deliveries", force: :cascade do |t|
     t.integer  "template_id",  limit: 4,                 null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150227044611) do
     t.integer  "campaign_id",  limit: 4,                 null: false
   end
 
-  add_index "deliveries", ["campaign_id"], name: "fk_rails_335100cb07", using: :btree
+  add_index "deliveries", ["campaign_id"], name: "fk_rails_7a9e686586", using: :btree
   add_index "deliveries", ["recipient_id"], name: "fk_recipient_id", using: :btree
   add_index "deliveries", ["sender_id"], name: "fk_sender_id", using: :btree
   add_index "deliveries", ["template_id"], name: "fk_template_id", using: :btree
@@ -56,18 +56,18 @@ ActiveRecord::Schema.define(version: 20150227044611) do
   add_index "recipients", ["sender_id", "email"], name: "index_recipients_on_sender_id_and_email", unique: true, using: :btree
 
   create_table "templates", force: :cascade do |t|
-    t.string   "name",        limit: 255,               null: false
-    t.string   "subject",     limit: 255
+    t.string   "name",        limit: 255,                          null: false
+    t.string   "subject",     limit: 255,   default: "No subject"
     t.text     "html",        limit: 65535
     t.text     "text",        limit: 65535
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "provider",    limit: 4,     default: 0
     t.integer  "campaign_id", limit: 4
-    t.integer  "user_id",     limit: 4,                 null: false
+    t.integer  "user_id",     limit: 4,                            null: false
   end
 
-  add_index "templates", ["campaign_id"], name: "fk_rails_34db9c611c", using: :btree
+  add_index "templates", ["campaign_id"], name: "fk_rails_87ef3c4502", using: :btree
   add_index "templates", ["name", "user_id"], name: "index_templates_on_name_and_user_id", unique: true, using: :btree
   add_index "templates", ["user_id"], name: "fk_user_id", using: :btree
 

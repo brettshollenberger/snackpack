@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
-    renderer = HTMLwithPygments.new(with_toc_data: true, hard_wrap: true, filter_html: true, fenced_code_blocks: true)
+    renderer = HTMLwithPygments.new(with_toc_data: true, hard_wrap: true, filter_html: false, fenced_code_blocks: true)
     options = {
       autolink: true,
       no_intra_emphasis: true,

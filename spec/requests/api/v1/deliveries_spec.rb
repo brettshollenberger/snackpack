@@ -185,6 +185,18 @@ describe "Deliveries API :" do
         }
       end
 
+      def foreign_key_error_json
+        { 
+          :format => :json, 
+          :template_id => Template.last.id + 1,
+          :recipient_id => @recipient.id,
+          :campaign_id => @campaign.id,
+          :data => {
+            :company_name => "YMCMB"
+          }
+        }
+      end
+
       def valid_delivery_with_recipient_json
         {
           :format => :json, 
@@ -263,6 +275,21 @@ describe "Deliveries API :" do
       describe "If I create an invalid delivery :" do
         before(:each) do
           post api_v1_deliveries_path(invalid_delivery_json)
+        end
+
+        it "It is not a successful request" do
+          expect(response).to_not be_success
+        end
+
+        it "It renders a 422 unprocessable entity" do
+          expect(json.error).to eq "Unprocessable entity"
+          expect(json.status).to eq "422"
+        end
+      end
+
+      describe "If I create a delivery with a foreign key error :" do
+        before(:each) do
+          post api_v1_deliveries_path(foreign_key_error_json)
         end
 
         it "It is not a successful request" do

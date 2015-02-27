@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pygments.rb'
 gem 'redcarpet'
+gem 'bower-rails'
 
 gem 'auto_strip_attributes'
 gem 'exception_notification'

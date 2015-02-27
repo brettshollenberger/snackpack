@@ -68,5 +68,19 @@ describe Template do
 
       expect(template).to_not be_valid
     end
+
+    it "is invalid if both html & text are blank" do
+      template.html = nil
+
+      expect(template).to be_valid
+
+      template.text = nil
+
+      expect(template).to_not be_valid
+
+      template.html = "something"
+
+      expect(template).to be_valid
+    end
   end
 end

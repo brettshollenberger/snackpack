@@ -44,6 +44,13 @@ For example, the HTML portion of a template may look like:
 GET api/v1/templates
 ```
 
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/templates"
+ no-data>
+</div>
+
 #### Permissions:
 
 Users may list their own templates.
@@ -65,9 +72,17 @@ GET api/v1/templates
 ```
 
 ### Show Template
+
 ```ruby
 GET api/v1/templates/:id
 ```
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/templates/:id"
+ example-data='{"id": 1}'>
+</div>
 
 #### Permissions:
 
@@ -88,9 +103,17 @@ GET api/v1/templates/1
 ```
 
 ### Create Template
+
 ```ruby
 POST api/v1/templates
 ```
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/templates"
+ example-data='{"name": "My Great Template", "subject": "Welcome to our campaign", "html": "<p>Welcome, <%%= recipient.first_name %>.</p>", "text": "Welcome <%%= recipient.first_name %>."}'>
+</div>
 
 #### Permissions:
 
@@ -142,9 +165,17 @@ Location: https://snackpackmailer.com/api/v1/templates/1
 ```
 
 ### Update Template
+
 ```ruby
 PUT api/v1/templates/:id
 ```
+
+<div 
+ api-request-example 
+ method="PUT" 
+ url="api/v1/templates/:id"
+ example-data='{"id": 1, "name": "New Template Name", "subject": "New subject"}'>
+</div>
 
 #### Permissions:
 
@@ -191,6 +222,13 @@ PUT api/v1/templates/1
 DELETE api/v1/templates/:id
 ```
 
+<div 
+ api-request-example 
+ method="DELETE" 
+ url="api/v1/templates/:id"
+ example-data='{"id": 1}'>
+</div>
+
 #### Permissions:
 
 Users may delete their own templates.
@@ -212,9 +250,17 @@ DELETE api/v1/templates/1
 Recipients are the users you send your emails to. Whenever you send an email, that user will be added to your recipients list.
 
 ### List Recipients
+
 ```ruby
 GET api/v1/recipients
 ```
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/recipients"
+ no-data>
+</div>
 
 #### Permissions:
 
@@ -244,9 +290,17 @@ GET api/v1/recipients
 ```
 
 ### Show Recipient
+
 ```ruby
 GET api/v1/recipients/:id
 ```
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/recipients/:id"
+ example-data='{"id": 1}'>
+</div>
 
 #### Permissions:
 
@@ -267,9 +321,17 @@ GET api/v1/recipients/1
 ```
 
 ### Create Recipient
+
 ```ruby
 POST api/v1/recipients
 ```
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/recipients"
+ example-data='{"first_name": "Aubrey", "last_name": "Graham", "email": "drizzy@drake.net"}'>
+</div>
 
 #### Permissions:
 
@@ -311,9 +373,17 @@ Location: https://snackpackmailer.com/api/v1/recipients/1
 ```
 
 ### Update Recipient
+
 ```ruby
 PUT api/v1/recipients/:id
 ```
+
+<div 
+ api-request-example 
+ method="PUT" 
+ url="api/v1/recipients/:id"
+ example-data='{"id": 1, "first_name": "Drizzy", "last_name": "Drake"}'>
+</div>
 
 #### Permissions:
 
@@ -357,6 +427,13 @@ PUT api/v1/recipients/1
 DELETE api/v1/recipients/:id
 ```
 
+<div 
+ api-request-example 
+ method="DELETE" 
+ url="api/v1/recipients/:id"
+ example-data='{"id": 1}'>
+</div>
+
 #### Permissions:
 
 Users may delete their own recipients.
@@ -390,6 +467,13 @@ Deliveries are the attempts to deliver emails to the recipients in a campaign. U
 ```ruby
 GET api/v1/deliveries
 ```
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/deliveries"
+ no-data>
+</div>
 
 #### Permissions:
 
@@ -430,6 +514,13 @@ GET api/v1/deliveries
 GET api/v1/deliveries/:id
 ```
 
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/deliveries/:id"
+ example-data='{"id": 1}'>
+</div>
+
 #### Permissions:
 
 Users may show their own deliveries.
@@ -458,6 +549,14 @@ GET api/v1/deliveries/1
 ```ruby
 POST api/v1/deliveries
 ```
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/deliveries"
+ createsDelivery
+ example-data='{"recipient": {"first_name": "Drizzy", "last_name": "Drake", "email": "drizzy@drake.net"}, "template_id": 1, "campaign_id": 1}'>
+</div>
 
 #### Permissions:
 
@@ -517,6 +616,13 @@ Location: https://snackpackmailer.com/api/v1/deliveries/1
 DELETE api/v1/deliveries/:id
 ```
 
+<div 
+ api-request-example 
+ method="DELETE" 
+ url="api/v1/deliveries/:id"
+ example-data='{"id": 1}'>
+</div>
+
 #### Permissions:
 
 Users may delete their own deliveries.
@@ -542,6 +648,13 @@ Campaigns are coordinated sets of emails with a given email template to a list o
 ```ruby
 GET api/v1/campaigns
 ```
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/campaigns"
+ no-data>
+</div>
 
 #### Permissions:
 
@@ -569,6 +682,13 @@ GET api/v1/campaigns
 GET api/v1/campaigns/:id
 ```
 
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/campaigns/:id"
+ example-data='{"id": 1}'>
+</div>
+
 #### Permissions:
 
 Users may show their own campaigns.
@@ -592,6 +712,13 @@ GET api/v1/campaigns/1
 ```ruby
 POST api/v1/campaigns
 ```
+
+<div 
+ api-request-example 
+ method="POST" 
+ url="api/v1/campaigns"
+ example-data='{"name": "My Great Campaign", "queue": "high"}'>
+</div>
 
 #### Permissions:
 
@@ -637,6 +764,13 @@ Location: https://snackpackmailer.com/api/v1/campaigns/1
 PUT api/v1/campaigns/:id
 ```
 
+<div 
+ api-request-example 
+ method="PUT" 
+ url="api/v1/campaigns/:id"
+ example-data='{"id": 1, "name": "New Campaign Name", "queue": "low"}'>
+</div>
+
 #### Permissions:
 
 Users may update their own campaigns.
@@ -680,6 +814,13 @@ PUT api/v1/campaigns/1
 ```ruby
 DELETE api/v1/campaigns/:id
 ```
+
+<div 
+ api-request-example 
+ method="DELETE" 
+ url="api/v1/campaigns/:id"
+ example-data='{"id": 1}'>
+</div>
 
 #### Permissions:
 

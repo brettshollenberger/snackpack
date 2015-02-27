@@ -13,4 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require angular
+//= require lodash
+//= require rxjs
+//= require rxjs-jquery
 //= require_tree .
