@@ -1,0 +1,19 @@
+@import 'constants';
+
+// Mixin to generate columns for our breakpoints.
+@mixin generateColumns($type) {
+  @for $i from 1 to $num-columns+1 {
+    .col-#{$type}-#{$i} {
+      width:100% / $i;
+    }
+  }
+}
+
+// Generate grids
+@mixin generateGrid($type) {
+  @for $i from 1 to $num-grid+1 {
+    .even-#{i} {
+      width:100% / $i;
+    }
+  }
+}

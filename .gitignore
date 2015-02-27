@@ -13,5 +13,3 @@
 /tmp
 
 config/secrets.yml
-
-/vendor/assets/bower_components
