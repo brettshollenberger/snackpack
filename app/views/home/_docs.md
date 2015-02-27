@@ -1,5 +1,11 @@
 # Snackpack API
 
+## [TL;DR Quick Start Example](#tldr-quick-start-example)
+* [Create Template](#1.-create-template)
+* [Create Campaign](#2.-create-campaign)
+* [Create Delivery](#3.-create-delivery)
+
+## [Docs](#documentation)
 * [Templates](#templates)
   * [List](#list-templates)
   * [Show](#show-template)
@@ -24,9 +30,13 @@
   * [Update](#update-campaign)
   * [Delete](#delete-campaign)
 
-### TL;DR Quick Start Example:
+# TLDR Quick Start Example
 
-#### Create Template:
+#### 1. Create Template
+
+Email templates use ERB syntax to embed data values. During delivery, these values can be supplied in a data hash. Templates also have access to the special `recipient` variable, which includes the recipient's `first_name`, `last_name`, and `email`.
+
+Create your first template below to get started:
 
 <div 
  api-request-example 
@@ -36,7 +46,11 @@
  example-data='{"name": "My Great Template", "subject": "Welcome to our campaign", "html": "<p>Welcome, <%%= recipient.first_name %>.</p>", "text": "Welcome <%%= recipient.first_name %>."}'>
 </div>
 
-#### Create Campaign: 
+#### 2. Create Campaign 
+
+Email campaigns track the success of many related deliveries. Currently they include the successful send rate, but in the future they could also track opens, link clicks, and other analytics at a high level.
+
+Create your first campaign below.
 
 <div 
  api-request-example 
@@ -46,7 +60,11 @@
  example-data='{"name": "My Great Campaign", "queue": "high"}'>
 </div>
 
-#### Create Delivery:
+#### 3. Create Delivery
+
+A delivery supplies a template with the data variables it needs to render, plus the recipient it should be sent to. It is attached to a campaign so that it can be analyzed as part of a group.
+
+Send your first email delivery below. Remember: this sends a real email!
 
 <div 
  api-request-example 
@@ -56,6 +74,8 @@
  quickstart
  example-data='{"recipient": {"first_name": "Drizzy", "last_name": "Drake", "email": "drizzy@drake.net"}, "template_id": 1, "campaign_id": 1}'>
 </div>
+
+# Documentation
 
 ## Templates
 

@@ -16,9 +16,11 @@ module Api
       end
 
       def check_required_headers
+        return true unless %w(PUT POST).include?(request.headers["REQUEST_METHOD"])
+
         content_type = request.headers["Content-Type"]
 
-        unless content_type.present? && accepted_content_types.include?(content_type)
+        unless content_type.present? && accepted_content_types.any? { |accepted| !!(content_type.match accepted) }
           render unsupported_content_type and return
         end
       end

@@ -10,6 +10,10 @@
   padding: 10px 20px;
 }
 
+#tldr-quick-start-example {
+  margin-bottom: 20px;
+}
+
 .json-key {
   color: #66d9ef;
 }
@@ -25,6 +29,12 @@
 .api-request textarea {
   width: 100%;
   max-width: 100%;
+}
+
+[api-request-example] {
+  padding: 20px;
+  background-color: #A0DCDD;
+  margin: 20px 0;
 }
 
 .warning {

@@ -6,8 +6,8 @@ class Delivery < ActiveRecord::Base
   scope :sent,      -> { where(:status => :sent) }
   scope :attempted, -> { where("status <> ?", :created) }
 
-  belongs_to :template
-  belongs_to :campaign
+  belongs_to :template, :dependent => :destroy
+  belongs_to :campaign, :dependent => :destroy
   belongs_to :recipient, :autosave => true
   belongs_to :sender, :class_name => "User", :autosave => true
 
