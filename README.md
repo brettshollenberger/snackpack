@@ -1,3 +1,34 @@
+# Live Site:
+
+snackpackmailer.com
+
+# Problem:
+
+Email campaigns. Snackpack focuses on creating email templates, tracking the success of deliveries, and the success of campaigns.
+
+In particular it confronts the infrastructural problem of fault tolerance in the face of unresponsive or badly behaving remote providers (email services). 
+
+Logical next steps would include tracking click through rates and open rates of campaigns.
+
+# Solution:
+
+The email jobs queue shares a set of Circuit Breaker objects in its thread pool, so that workers can share knowledge of the state of a remote API.
+
+The circuit breakers shut off remote calls to any email service that has failed in 30% of the past 100 calls, opting for known-good services.
+
+Deliverers use an adapter pattern to allow for easy configuration of new email services. 
+
+The system is presented through a JSON API & interactive documentation, as the primary focus in this project was the backend services.
+
+The system uses Rails for its fast iteration speed & Ruby because its code blocks make the dynamic programming challenges of this problem easy to solve.
+
+In the future, the application should be refactored to perform load-balancing among email service providers; it was originally conceived that users of the Snackpack API would select their preferred email provider, which would provide some ad hoc load balancing, but I ultimately decided users should not be able to set their provider.
+
+#### Reference material:
+
+* http://martinfowler.com/bliki/CircuitBreaker.html
+* http://techblog.netflix.com/2012/02/fault-tolerance-in-high-volume.html
+
 # Snackpack API
 
 * [Auth Token](#auth-token)
