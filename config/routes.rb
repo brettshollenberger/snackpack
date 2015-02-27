@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
+      get :auth_token, to: "auth_tokens#show"
+
       resources :users, :only => [:index, :show]
       resources :recipients, :only => [:index, :show, :create, :update, :destroy]
       resources :templates, :only => [:index, :show, :create, :update, :destroy]

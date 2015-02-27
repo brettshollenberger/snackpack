@@ -1,34 +1,35 @@
 # Snackpack API
 
 ## [TL;DR Quick Start Example](#tldr-quick-start-example)
-* [Create Template](#1.-create-template)
-* [Create Campaign](#2.-create-campaign)
-* [Create Delivery](#3.-create-delivery)
+  * [Create Template](#1.-create-template)
+  * [Create Campaign](#2.-create-campaign)
+  * [Create Delivery](#3.-create-delivery)
 
 ## [Docs](#documentation)
-* [Templates](#templates)
-  * [List](#list-templates)
-  * [Show](#show-template)
-  * [Create](#create-template)
-  * [Update](#update-template)
-  * [Delete](#delete-template)
-* [Recipients](#recipients)
-  * [List](#list-recipients)
-  * [Show](#show-recipient)
-  * [Create](#create-recipient)
-  * [Update](#update-recipient)
-  * [Delete](#delete-recipient)
-* [Deliveries](#deliveries)
-  * [List](#list-deliveries)
-  * [Show](#show-delivery)
-  * [Create](#create-delivery)
-  * [Delete](#delete-delivery)
-* [Campaigns](#campaigns)
-  * [List](#list-campaigns)
-  * [Show](#show-campaign)
-  * [Create](#create-campaign)
-  * [Update](#update-campaign)
-  * [Delete](#delete-campaign)
+  * [Auth Token](#auth-token)
+  * [Templates](#templates)
+    * [List](#list-templates)
+    * [Show](#show-template)
+    * [Create](#create-template)
+    * [Update](#update-template)
+    * [Delete](#delete-template)
+  * [Recipients](#recipients)
+    * [List](#list-recipients)
+    * [Show](#show-recipient)
+    * [Create](#create-recipient)
+    * [Update](#update-recipient)
+    * [Delete](#delete-recipient)
+  * [Deliveries](#deliveries)
+    * [List](#list-deliveries)
+    * [Show](#show-delivery)
+    * [Create](#create-delivery)
+    * [Delete](#delete-delivery)
+  * [Campaigns](#campaigns)
+    * [List](#list-campaigns)
+    * [Show](#show-campaign)
+    * [Create](#create-campaign)
+    * [Update](#update-campaign)
+    * [Delete](#delete-campaign)
 
 # TLDR Quick Start Example
 
@@ -78,6 +79,20 @@ Send your first email delivery below. Remember: this sends a real email!
 Now you should have sent your first email! Read the rest of the docs below as necessary.
 
 # Documentation
+
+## Auth Token
+
+If you want to make requests from somewhere other than this page, you will need your auth token.
+
+You can use the auth token in the Authorization Header (e.g. "auth_token YOUR_TOKEN") or as the auth_token query parameter.
+
+<div 
+ api-request-example 
+ method="GET" 
+ url="api/v1/auth_token"
+ quickstart
+ no-data>
+</div>
 
 ## Templates
 
