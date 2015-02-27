@@ -57,7 +57,7 @@ module Api
       end
 
       def recipient_params
-        if params[:recipient].present?
+        if params[:recipient].present? && params[:recipient].is_a?(Hash)
           params[:recipient].permit(:email, :first_name, :last_name)
         end
       end

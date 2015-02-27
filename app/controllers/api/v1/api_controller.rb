@@ -2,6 +2,7 @@ module Api
   module V1
     class ApiController < ApplicationController
       before_action :authorize
+      before_action :check_required_headers
 
       class NotPermitted < StandardError
         def message
@@ -10,6 +11,18 @@ module Api
       end
 
     private
+      def accepted_content_types
+        %w(application/json application/x-www-form-urlencoded)
+      end
+
+      def check_required_headers
+        content_type = request.headers["Content-Type"]
+
+        unless content_type.present? && accepted_content_types.include?(content_type)
+          render unsupported_content_type and return
+        end
+      end
+
       def rescue_401_or_404(&block)
         begin
           block.call
@@ -49,6 +62,16 @@ module Api
         {:status => :unprocessable_entity,
          :json => {
             :errors => entity.errors.to_h, 
+            :status => "422", 
+            :error => "Unprocessable entity. Please consult the documentation to see how to properly formulate your request."
+          }
+        }
+      end
+
+      def unsupported_content_type
+        {:status => :unprocessable_entity,
+         :json => {
+            :errors => "Content-Type header not set or not supported Content-Type", 
             :status => "422", 
             :error => "Unprocessable entity"
           }

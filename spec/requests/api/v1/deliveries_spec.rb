@@ -282,7 +282,6 @@ describe "Deliveries API :" do
         end
 
         it "It renders a 422 unprocessable entity" do
-          expect(json.error).to eq "Unprocessable entity"
           expect(json.status).to eq "422"
         end
       end
@@ -297,7 +296,26 @@ describe "Deliveries API :" do
         end
 
         it "It renders a 422 unprocessable entity" do
-          expect(json.error).to eq "Unprocessable entity"
+          expect(json.status).to eq "422"
+        end
+      end
+
+      describe "If I create a delivery with non-json recipient :" do
+        # sending recipient as non-json
+        before(:each) do
+          post api_v1_deliveries_path({
+            :format => :json,
+            :template_id => @template.id,
+            :campaign_id => @campaign.id,
+            :recipient => "shalom@edmodo.com"
+          })
+        end
+
+        it "It is not a successful request" do
+          expect(response).to_not be_success
+        end
+
+        it "It renders a 422 unprocessable entity" do
           expect(json.status).to eq "422"
         end
       end
