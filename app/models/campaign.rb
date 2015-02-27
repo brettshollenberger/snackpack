@@ -2,7 +2,7 @@ class Campaign < ActiveRecord::Base
   QUEUES = %w(high medium low)
 
   has_many :templates
-  has_many :deliveries
+  has_many :deliveries, :dependent => :destroy
   belongs_to :user
 
   validates :name, presence: true, length:{maximum: 250}
